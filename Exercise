@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class StringProcessor {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String userInput = getUserInput(scanner);
+
+        System.out.println("Оберіть опцію:");
+        System.out.println("1 - Перевернути всю строку");
+        System.out.println("2 - Перевернути кожне слово");
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+
+        if (choice == 1) {
+            System.out.println("Перевернута строка: " + reverseString(userInput));
+        } else if (choice == 2) {
+            System.out.println("Перевернуті слова: " + reverseEachWord(userInput));
+        } else {
+            System.out.println("Невідома опція.");
+        }
+    }
+
+    public static String getUserInput(Scanner scanner) {
+        String input;
+        while (true) {
+            System.out.println("Введіть строку (мінімум 2 слова, кожне слово мінімум 3 символи):");
+            input = scanner.nextLine().trim();
+
+            String[] words = input.split("\\s+");
+            boolean valid = words.length >= 2;
+            for (String word : words) {
+                if (word.length() < 3) {
+                    valid = false;
+                    break;
+                }
+            }
+
+            if (valid) {
+                return input;
+            }
+            System.out.println("Строка не відповідає вимогам. Спробуйте ще раз.");
+        }
+    }
+
+    public static String reverseString(String str) {
+        return new StringBuilder(str).reverse().toString();
+    }
+
+    public static String reverseEachWord(String str) {
+        String[] words = str.split("\\s+");
+        StringBuilder result = new StringBuilder();
+
+        for (String word : words) {
+            result.append(new StringBuilder(word).reverse().toString()).append(" ");
+        }
+
+        return result.toString().trim();
+    }
+}
